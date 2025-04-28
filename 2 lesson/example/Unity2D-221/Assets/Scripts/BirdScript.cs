@@ -7,13 +7,15 @@ public class BirdScript : MonoBehaviour
     [SerializeField] private bool isHardMode = false;           
 
     private Rigidbody2D rb;
-    private float health;
+    public static float health;
     private float forceMultiplier;
+
+    private float healthTimeout = 100.0f; // 100sec
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        health = 100f; 
+        health = 1.0f; 
         forceMultiplier = isHardMode ? hardForceMultiplier : easyForceMultiplier; 
     }
 
@@ -25,15 +27,24 @@ public class BirdScript : MonoBehaviour
 
         transform.eulerAngles = new Vector3(0, 0, 3f * rb.linearVelocityY); 
     
-        health -= Time.deltaTime; 
+        health -= Time.deltaTime / healthTimeout; 
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
-        if (other.CompareTag("Food")) {
-            Destroy(other.gameObject);
-            health = Mathf.Min(health + 10f, 100f);
-
-            Debug.Log("Health: " + health);
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Food"))
+        {
+            FoodScript food = other.GetComponent<FoodScript>();
+            if (food != null)
+            {
+                Destroy(other.gameObject);
+                health = Mathf.Clamp01(health + food.healthBonus / healthTimeout); 
+                Debug.Log("Health: " + health);
+            }
+        }
+        if (other.CompareTag("Pipe"))
+        {
+            AlertScript.instance.Show("Collision", "You hit an obstacle and lose a life");
         }
     }
 }
