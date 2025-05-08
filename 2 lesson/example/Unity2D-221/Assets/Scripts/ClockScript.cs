@@ -7,26 +7,22 @@ public class ClockScript : MonoBehaviour
 
     void Start()
     {
-        time = 0f;
+        time = 0;
         clock = GetComponent<TMPro.TextMeshProUGUI>();
     }
 
-
-    void Update()
-    {
+    void Update() {
         time += Time.deltaTime;
+
         int t = Mathf.FloorToInt(time);
         int h = t / 3600;
         int m = (t % 3600) / 60;
         int s = t % 60;
-        
-        if (h > 0)
-        {
-            clock.text = $"{h:00} : {m:00} : {s:00}";
-        }
-        else
-        {
-            clock.text = $"{m:00} : {s:00}";
+
+        if (h > 0) {
+            clock.text = string.Format("{0:D2}:{1:D2}:{2:D2}", h, m, s);
+        } else {
+            clock.text = string.Format("{0:D2}:{1:D2}", m, s);
         }
     }
 }

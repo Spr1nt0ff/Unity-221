@@ -314,6 +314,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdc6ae74487b77340b1bcba13e4f8f5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  easySpeed: 5
-  hardSpeed: 15
-  isHardMode: 0

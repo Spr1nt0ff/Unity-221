@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 8457230547541124939}
   - component: {fileID: 3133089715595421525}
   - component: {fileID: 2186478392070257981}
-  - component: {fileID: 753116921119001695}
+  - component: {fileID: -1304238998508845479}
   m_Layer: 0
   m_Name: Food
   m_TagString: Food
@@ -173,7 +173,7 @@ MonoBehaviour:
   easySpeed: 5
   hardSpeed: 15
   isHardMode: 0
---- !u!114 &753116921119001695
+--- !u!114 &-1304238998508845479
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -182,7 +182,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8486725032045782715}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0978cc226ccb82a47946377bbaa27419, type: 3}
+  m_Script: {fileID: 11500000, guid: 64378b9ea02e16c4293defa01889b1c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthBonus: 8
+  healthBonus: 5
