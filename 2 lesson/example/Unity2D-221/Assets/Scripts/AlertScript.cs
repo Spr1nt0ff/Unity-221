@@ -1,7 +1,8 @@
 ﻿using System;
 using UnityEngine;
 
-public class AlertScript :MonoBehaviour {
+public class AlertScript : MonoBehaviour
+{
     private static TMPro.TextMeshProUGUI title;
     private static TMPro.TextMeshProUGUI message;
     private static TMPro.TextMeshProUGUI actionButtonText;
@@ -9,7 +10,8 @@ public class AlertScript :MonoBehaviour {
     private static GameObject content;
     private static Action action;
 
-    public static void Show(string title, string message, string actionButtonText = "Close", Action action = null) {
+    public static void Show(string title, string message, string actionButtonText = "Close", Action action = null)
+    {
         AlertScript.title.text = title;
         AlertScript.message.text = message;
         AlertScript.actionButtonText.text = actionButtonText;
@@ -19,27 +21,32 @@ public class AlertScript :MonoBehaviour {
         Time.timeScale = 0.0f;
     }
 
-    void Start() {
+    void Start()
+    {
         Transform c = transform.Find("Content");
         title = c.Find("Title").GetComponent<TMPro.TextMeshProUGUI>();
         message = c.Find("Message").GetComponent<TMPro.TextMeshProUGUI>();
         actionButtonText = c.Find("Button/Text").GetComponent<TMPro.TextMeshProUGUI>();
 
         content = c.gameObject;
-        content.SetActive(false);
+        content.SetActive(false); 
     }
 
-    void Update() {
-        if (Input.GetKeyDown(KeyCode.Escape) && content.activeSelf) {
-            OnActionButtonClick();
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Q) && content.activeSelf)
+        {
+            OnActionButtonClick(); 
         }
     }
 
-    public void OnActionButtonClick() {
-        content.SetActive(false);
-        Time.timeScale = 1.0f;
+    public void OnActionButtonClick()
+    {
+        content.SetActive(false); 
+        Time.timeScale = 1.0f; 
 
-        if (action != null) {
+        if (action != null)
+        {
             action.Invoke(); 
         }
 

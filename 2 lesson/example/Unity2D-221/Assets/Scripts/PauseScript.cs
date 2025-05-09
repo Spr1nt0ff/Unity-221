@@ -10,34 +10,51 @@ public class PauseScript : MonoBehaviour
         Transform c = transform.Find("Content");
         content = c.gameObject;
 
-        if (content.activeSelf) {
+        if (content.activeSelf)
+        {
             Time.timeScale = 0.0f;
         }
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P)) {
-            TogglePause();
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            TogglePause(); 
         }
     }
 
-    private void TogglePause() {
-        if (content.activeSelf) {
-            content.SetActive(false);
-            Time.timeScale = 1.0f;
-        } else {
-            content.SetActive(true);
-            Time.timeScale = 0.0f;
+    private void TogglePause()
+    {
+        if (content.activeSelf)
+        {
+            content.SetActive(false); 
+            Time.timeScale = 1.0f; 
+        }
+        else
+        {
+            content.SetActive(true); 
+            Time.timeScale = 0.0f; 
         }
     }
 
-    public void OnButtonClick() {
+    public void OnButtonClick()
+    {
         content.SetActive(false);
-        Time.timeScale = 1.0f; 
+        Time.timeScale = 1.0f;
     }
 
-    public void OnIntervalValueChanged(Single value) {
-        SpawnerScript.difficulty = value; 
+
+    public void OnIntervalValueChanged(Single value)
+    {
+        SpawnerScript.difficulty = value;
+    }
+    public void OnIntervalValueChancesLife(Single value)
+    {
+        BirdScript.extraLifeChance = value;
+    }
+    public void OnIntervalValueChanceFood(Single value)
+    {
+        SpawnerScript.foodDropChance = value;
     }
 }

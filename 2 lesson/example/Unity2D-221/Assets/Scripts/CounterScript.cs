@@ -5,7 +5,8 @@ public class CounterScript : MonoBehaviour
     private static TMPro.TextMeshProUGUI counter1;
     private static TMPro.TextMeshProUGUI counter2;
 
-    public static void UpdateCounter() {
+    public static void UpdateCounter()
+    {
         counter1.text = SpawnerScript.foodCount[0].ToString();
         counter2.text = SpawnerScript.foodCount[1].ToString();
     }
