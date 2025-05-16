@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEditor.Search;
 using UnityEditor.VersionControl;
 using UnityEngine;
@@ -27,24 +27,22 @@ public class ToasterScript : MonoBehaviour
 
         content.SetActive(false);
         timeout = 0.0f;
+
         GameState.AddListener(OnGameStateChanged);
+        GameEventSystem.Subscribe(OnGameEvent);
     }
 
 
     void Update()
     {
-        if (timeout > 0)
-        {
+        if (timeout > 0) {
             timeout -= Time.deltaTime;
             contentGroup.alpha = Mathf.Clamp01(timeout * 2.0f);
 
-            if (timeout < 0)
-            {
+            if (timeout < 0) {
                 content.SetActive(false);
             }
-        }
-        else if (messageQueue.Count > 0)
-        {
+        } else if (messageQueue.Count > 0) {
             var toastMessage = messageQueue.Dequeue();
             content.SetActive(true);
             text.text = toastMessage.message;
@@ -52,34 +50,37 @@ public class ToasterScript : MonoBehaviour
         }
     }
 
-
-    private void OnGameStateChanged(string fieldName)
-    {
-        if (fieldName == nameof(GameState.isKey1Collected))
-        {
-            Toast("You picked up a key! Open black door", 2.0f);
+    private void OnGameStateChanged(string fieldName) {
+        if (fieldName == nameof(GameState.isDay)) {
+            Toast(GameState.isDay 
+                ? "Day has fallen" 
+                : "Night has fallen"
+            );
         }
     }
+    private void OnGameEvent(GameEvent gameEvent) {
+        if (gameEvent.toast is string msg) {
+            Toast(msg);
+        }
+    }
+    private void OnDestroy() {
+        GameState.RemoveListener(OnGameStateChanged);
+        GameEventSystem.Unsubscribe(OnGameEvent);
+    }
 
-    public static void Toast(string message, float time = 0.0f)
-    {
+public static void Toast(string message, float time = 0.0f) {
         //instance.content.SetActive(true);
         //instance.text.text = message;
         //instance.timeout = time == 0.0f ? instance.showtime : time;
 
-        instance.messageQueue.Enqueue(new ToastMessage
-        {
-            message = message,
+        instance.messageQueue.Enqueue(new ToastMessage { 
+            message = message, 
             time = time > 0.0f ? time : instance.showtime
         });
     }
 
-    private class ToastMessage
-    {
+    private class ToastMessage {
         public string message { get; set; }
         public float time { get; set; }
     }
-
-
-
 }

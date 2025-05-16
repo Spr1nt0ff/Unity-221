@@ -1,29 +1,24 @@
-using UnityEngine;
+﻿using UnityEngine;
 
-public class SkyBoxScript : MonoBehaviour
+public class SkyboxScript : MonoBehaviour
 {
-    [SerializeField]
-    private Material daySkybox;
-    [SerializeField]
-    private Material nightSkybox;
+    [SerializeField] private Material daySkyBox;
+    [SerializeField] private Material nightSkyBox;
+
 
     void Start()
     {
         GameState.AddListener(OnGameStateChanged);
+        TargetSkyBlox();
     }
 
-
-    private void OnGameStateChanged(string fieldName)
-    {
-        if(fieldName == nameof(GameState.isDay)){
-            RenderSettings.skybox = GameState.isDay ? daySkybox : nightSkybox;
-        }
+    private void OnGameStateChanged(string fieldName) {
+        if (fieldName == nameof(GameState.isDay)) { TargetSkyBlox(); }
     }
-
-
-    private void OnDestroy()
-    {
+    private void TargetSkyBlox() {
+        RenderSettings.skybox = GameState.isDay ? daySkyBox : nightSkyBox;
+    }
+    private void OnDestroy() {
         GameState.RemoveListener(OnGameStateChanged);
     }
-
 }
