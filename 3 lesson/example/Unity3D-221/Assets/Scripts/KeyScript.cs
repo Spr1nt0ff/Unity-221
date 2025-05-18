@@ -5,7 +5,7 @@ public class KeyScript : MonoBehaviour
 {
     [SerializeField] private int keyNumber = 1;
     [SerializeField] private float timeout = 10.0f;
-    [SerializeField] private string desk = "color";
+    [SerializeField] private string desk = "";
     [SerializeField] private bool isFirstKey = false;
 
     private GameObject content;

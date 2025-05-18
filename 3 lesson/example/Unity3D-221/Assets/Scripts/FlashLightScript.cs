@@ -14,9 +14,6 @@ public class FlashLightScript : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Player");
-        if (player == null) {
-            Debug.Log("FlashlightScript: Player not found");
-        }
 
         _light = GetComponent<Light>();
         charge = 1.0f;
@@ -60,10 +57,9 @@ public class FlashLightScript : MonoBehaviour
             GameObject.Destroy(other.gameObject);
             GameEventSystem.EmitEvent(new GameEvent { 
                 type = "Battery",
-                toast = $"You found a battery. Your charge: {charge:F1}",
+                toast = $"You found a battery. Your charge: {charge:F3}",
                 sound = EffectSounds.batteryCollected
             });
-            Debug.Log("Battery collected: " + charge);
         }
     }
 }
