@@ -12,16 +12,15 @@ public class PlayerScript : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
 
-        //Перехід між сценами, перенесення об'єктів між сценами
         if (prevInstance != null)
-        { //на момент старту існує інший об'єкт даного класу
+        { 
 
             this.rb.linearVelocity = prevInstance.rb.linearVelocity;
             this.rb.angularVelocity = prevInstance.rb.angularVelocity;
             GameObject.Destroy(prevInstance.gameObject);
 
         }
-        prevInstance = this; //зберігаємо помилання на даний об'єкт у статичному полі
+        prevInstance = this; 
 
 
         moveAction = InputSystem.actions.FindAction("Move");
