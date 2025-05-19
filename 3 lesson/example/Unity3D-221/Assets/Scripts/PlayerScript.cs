@@ -6,13 +6,29 @@ public class PlayerScript : MonoBehaviour
     private Rigidbody rb;
     private InputAction moveAction;
 
+    private static PlayerScript prevInstance = null;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        //Перехід між сценами, перенесення об'єктів між сценами
+        if (prevInstance != null)
+        { //на момент старту існує інший об'єкт даного класу
+
+            this.rb.linearVelocity = prevInstance.rb.linearVelocity;
+            this.rb.angularVelocity = prevInstance.rb.angularVelocity;
+            GameObject.Destroy(prevInstance.gameObject);
+
+        }
+        prevInstance = this; //зберігаємо помилання на даний об'єкт у статичному полі
+
+
         moveAction = InputSystem.actions.FindAction("Move");
     }
 
-    void Update() {
+    void Update()
+    {
         Vector2 moveValue = moveAction.ReadValue<Vector2>(); // From Unity 6
                                                              //new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
                                                              //rb.AddForce(moveValue.x, 0f, moveValue.y);
@@ -20,14 +36,17 @@ public class PlayerScript : MonoBehaviour
         Vector3 cameraRight = Camera.main.transform.right;
 
         cameraForward.y = 0f;
-        if (cameraForward == Vector3.zero) {
+        if (cameraForward == Vector3.zero)
+        {
             cameraForward = Camera.main.transform.up;
-        } else {
+        }
+        else
+        {
             cameraForward.Normalize();
         }
 
         Vector3 force = cameraForward * moveValue.y + cameraRight * moveValue.x;
         //rb.AddForce(force);
-        rb.AddForce(force * 100* Time.deltaTime);
+        rb.AddForce(force * 100 * Time.deltaTime);
     }
 }

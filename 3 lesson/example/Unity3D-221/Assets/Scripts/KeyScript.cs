@@ -51,9 +51,14 @@ public class KeyScript : MonoBehaviour
         isTimerRunning = true;
     }
 
-    private void OnTriggerEnter(Collider other) {
-        if (other.name == "Player") {
-            GameEventSystem.EmitEvent(new GameEvent {
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.name == "Player")
+        {
+            GameState.bag.Add($"Key{keyNumber}", 1);
+
+            GameEventSystem.EmitEvent(new GameEvent
+            {
                 type = $"Key{keyNumber}Collected",
                 payload = isInTime,
                 toast = $"key #{keyNumber} has been found. You can open the {desk} door.",
@@ -64,4 +69,5 @@ public class KeyScript : MonoBehaviour
             Destroy(this.gameObject);
         }
     }
+
 }
